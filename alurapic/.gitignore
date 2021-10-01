@@ -10,3 +10,11 @@ yarn-error.log
 *.ntvs*
 *.njsproj
 *.sln
+
+Thumbs.db
+db.json
+*.log
+public/
+.deploy*/
+src/_drafts
+package-lock.json
