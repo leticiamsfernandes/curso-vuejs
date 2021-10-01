@@ -11,23 +11,20 @@
 
 <script>
 export default {
-  name: "app",
   data() {
     return {
       titulo: "Alurapic",
-      fotos: [
-        {
-          id: 1,
-          url: "https://matsudapet.com.br/blog/wp-content/uploads/2019/08/shutterstock_559799125-compressed.jpg",
-          titulo: "Cachorro",
-        },
-        {
-          id: 2,
-          url: "https://matsudapet.com.br/blog/wp-content/uploads/2019/08/shutterstock_559799125-compressed.jpg",
-          titulo: "Cachorrão",
-        },
-      ]
+      fotos: [],
     };
+  },
+  created() {
+    this.$http
+      .get("http://localhost:3000/v1/fotos")
+      .then((res) => res.json())
+      .then(
+        (fotos) => (this.fotos = fotos),
+        (err) => console.log(err)
+      );
   },
 };
 </script>
