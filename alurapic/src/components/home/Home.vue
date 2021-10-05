@@ -17,6 +17,7 @@
           <imagem-responsiva
             :url="foto.url"
             :titulo="foto.titulo"
+            v-meu-transform:scale.animate="1.2"
           ></imagem-responsiva>
           <meu-botao
             tipo="button"
