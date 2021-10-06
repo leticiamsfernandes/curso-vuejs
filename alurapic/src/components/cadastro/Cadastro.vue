@@ -4,35 +4,56 @@
     <h2 class="centralizado">{{ foto.titulo }}</h2>
     <h2 v-if="foto._id" class="centralizado">Alterando</h2>
     <h2 v-else class="centralizado">Incluindo</h2>
-    <form @submit.prevent="grava()">
-      <div class="controle">
-        <label for="titulo">TÍTULO</label>
-        <input id="titulo" autocomplete="off" v-model.lazy="foto.titulo" />
-      </div>
-      <div class="controle">
-        <label for="url">URL</label>
-        <input id="url" autocomplete="off" v-model.lazy="foto.url" />
-        <imagem-responsiva
-          v-show="foto.url"
-          :url="foto.url"
-          :titulo="foto.titulo"
-        />
-      </div>
-      <div class="controle">
-        <label for="descricao">DESCRIÇÃO</label>
-        <textarea
-          id="descricao"
-          autocomplete="off"
-          v-model="foto.descricao"
-        ></textarea>
-      </div>
-      <div class="centralizado">
-        <meu-botao rotulo="GRAVAR" tipo="submit" />
-        <router-link :to="{ name: 'home' }"
-          ><meu-botao rotulo="VOLTAR" tipo="button"
-        /></router-link>
-      </div>
-    </form>
+    <validation-observer v-slot="{ handleSubmit }">
+      <form @submit.prevent="handleSubmit(grava)">
+        <div class="controle">
+          <label for="titulo">TÍTULO</label>
+          <validation-provider
+            rules="required|min:3|max:30"
+            v-slot="{ errors }"
+          >
+            <input
+              name="titulo"
+              id="titulo"
+              autocomplete="off"
+              v-model.lazy="foto.titulo"
+            />
+            <span class="erro" v-show="errors">{{ errors[0] }}</span>
+          </validation-provider>
+        </div>
+        <div class="controle">
+          <label for="url">URL</label>
+          <validation-provider rules="required" v-slot="{ errors }">
+            <input
+              name="url"
+              id="url"
+              autocomplete="off"
+              v-model.lazy="foto.url"
+            />
+            <imagem-responsiva
+              v-show="foto.url"
+              :url="foto.url"
+              :titulo="foto.titulo"
+            />
+            <span class="erro" v-show="errors">{{ errors[0] }}</span>
+          </validation-provider>
+        </div>
+        <div class="controle">
+          <label for="descricao">DESCRIÇÃO</label>
+          <textarea
+            id="descricao"
+            autocomplete="off"
+            v-model="foto.descricao"
+          ></textarea>
+        </div>
+        <div class="centralizado">
+          <meu-botao rotulo="GRAVAR" tipo="submit" />
+          <router-link :to="{ name: 'home' }"
+            ><meu-botao rotulo="VOLTAR" tipo="button"
+          /></router-link>
+        </div>
+      </form>
+    </validation-observer>
   </div>
 </template>
 
@@ -86,7 +107,7 @@ export default {
   font-weight: bold;
 }
 
-.controle label + input,
+.controle label + span input,
 .controle textarea {
   width: 100%;
   font-size: inherit;
@@ -95,5 +116,9 @@ export default {
 
 .centralizado {
   text-align: center;
+}
+
+.erro {
+  color: red;
 }
 </style>
