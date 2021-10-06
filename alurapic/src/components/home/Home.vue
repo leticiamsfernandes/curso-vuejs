@@ -20,6 +20,9 @@
             :titulo="foto.titulo"
             v-meu-transform:scale.animate="1.2"
           ></imagem-responsiva>
+          <router-link :to="{ name: 'altera', params: { id: foto._id } }">
+            <meu-botao tipo="button" rotulo="ALTERAR"></meu-botao>
+          </router-link>
           <meu-botao
             tipo="button"
             rotulo="REMOVER"
@@ -67,7 +70,7 @@ export default {
     this.service = new FotoService(this.$resource);
     this.service.lista().then(
       (fotos) => (this.fotos = fotos),
-      (err) => console.log(err)
+      (err) => (this.mensagem = err.message)
     );
   },
   methods: {
@@ -78,10 +81,7 @@ export default {
           this.fotos.splice(indice, 1);
           this.mensagem = "Foto removida com sucesso!";
         },
-        (err) => {
-          console.log(err);
-          this.mensagem = "Não foi possível remover a foto.";
-        }
+        (err) => (this.mensagem = err.message)
       );
     },
   },
