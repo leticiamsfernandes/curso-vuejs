@@ -8,6 +8,10 @@ import { ValidationProvider, extend, ValidationObserver } from "vee-validate";
 import { required, min, max } from "vee-validate/dist/rules";
 import { localize } from "vee-validate";
 import pt_BR from "vee-validate/dist/locale/pt_BR.json";
+import "bootstrap/dist/css/bootstrap.css";
+import "./assets/css/teste.css";
+import "./assets/js/teste.js";
+import "bootstrap/dist/js/bootstrap.js";
 
 Vue.use(VueResource);
 Vue.use(VueRouter);

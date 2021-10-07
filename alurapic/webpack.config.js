@@ -16,13 +16,16 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      }, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: {
+          options: {
+            loaders: {
+              scss: 'vue-style-loader!css-loader!sass-loader', // <style lang="scss">
+              sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax' // <style lang="sass">
+            }
           }
-          // other vue-loader options go here
         }
       },
       {
@@ -31,12 +34,12 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(woff(2)?|ttf|png|jpg|gif|svg|eot)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]?[hash]'
         }
-      }
+      },
     ]
   },
   resolve: {
@@ -53,7 +56,13 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery/dist/jquery.js',
+      jQuery: 'jquery/dist/jquery.js'
+    })
+  ]
 }
 
 if (process.env.NODE_ENV === 'production') {
