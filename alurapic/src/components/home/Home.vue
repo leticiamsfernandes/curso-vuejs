@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="../../static/teste.jpg" alt="">
+    <img src="../../static/teste.jpg" alt="" />
     <h1 class="centralizado">{{ titulo }}</h1>
     <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
     <input
@@ -42,12 +42,16 @@ import ImagemResponsiva from "../shared/imagem-responsiva/ImagemResponsiva.vue";
 import Painel from "../shared/painel/Painel.vue";
 import Botao from "../shared/botao/Botao.vue";
 import FotoService from "../../domain/foto/FotoService";
+import transform from "../../directives/Transform";
 
 export default {
   components: {
     "meu-painel": Painel,
     "imagem-responsiva": ImagemResponsiva,
     "meu-botao": Botao,
+  },
+  directives: {
+    "meu-transform": transform,
   },
   data() {
     return {
